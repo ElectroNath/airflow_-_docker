@@ -1,0 +1,41 @@
+- Open apache airflow documentation > How to guides > runnign Airflow in docker
+- Install docker and docker-compose 
+- Launch the docker app and make sure the docker engine is runnign
+- in ternimal enter 
+    docker --version 
+            and also 
+    docker-compose --version
+            to make sure that you see the containers runnign
+
+- download the .yaml file for docker-compose configuration using
+        curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.8.1/docker-compose.yaml'
+
+- In the configuration file curled do the following
+
+        - change CeleryExecutor to Localexecutor
+        - delete Airflow_celerey result backend ans broker url line
+        - remove the dependednsie and definition on redis
+        - delete cekery worker and flower
+
+- create directories using below in terminal
+        mkdir -p ./dags ./logs ./plugins ./config
+
+        - us ethe belwo too if you are o linux
+        echo -e "AIRFLOW_UID=$(id -u)" > .env
+
+- initilizae the databe by using 
+        docker compose up airflow-init
+
+
+
+
+Cleaning-up the environment
+The docker-compose environment we have prepared is a “quick-start” one. It was not designed to be used in production and it has a number of caveats - one of them being that the best way to recover from any problem is to clean it up and restart from scratch.
+
+The best way to do this is to:
+
+Run docker compose down --volumes --remove-orphans command in the directory you downloaded the docker-compose.yaml file
+
+Remove the entire directory where you downloaded the docker-compose.yaml file rm -rf '<DIRECTORY>'
+
+Run through this guide from the very beginning, starting by re-downloading the docker-compose.yaml file
